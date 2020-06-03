@@ -9,6 +9,10 @@ export const Container = styled.div`
   max-width: 1120px;
   margin: 0 auto;
   padding: 40px 20px;
+
+  .title {
+    margin-top: 50px;
+  }
 `;
 
 export const Title = styled.h1`
@@ -81,6 +85,11 @@ export const TableContainer = styled.section`
 
       &.outcome {
         color: #e83f5b;
+      }
+
+      svg,
+      img {
+        margin-right: 20px;
       }
     }
 

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
+import { FiHome } from 'react-icons/fi';
+import { GiHamburger } from 'react-icons/gi';
+import { RiBikeLine } from 'react-icons/ri';
 import income from '../../assets/income.svg';
 import outcome from '../../assets/outcome.svg';
 import total from '../../assets/total.svg';
+import totalCategory from '../../assets/total-category.svg';
 
 import api from '../../services/api';
 
@@ -96,32 +100,49 @@ const Dashboard: React.FC = () => {
           </Card>
         </CardContainer>
 
-        <TableContainer>
-          <table>
-            <thead>
-              <tr>
-                <th>Título</th>
-                <th>Preço</th>
-                <th>Categoria</th>
-                <th>Data</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {transactions.map(transaction => (
-                <tr key={transaction.id}>
-                  <td className="title">{transaction.title}</td>
-                  <td className={transaction.type}>
-                    {transaction.type === 'outcome' && ' - '}
-                    {transaction.formattedValue}
-                  </td>
-                  <td>{transaction.category.title}</td>
-                  <td>{transaction.formattedDate}</td>
+        {transactions.length > 0 ? (
+          <TableContainer>
+            <table>
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Preço</th>
+                  <th>Categoria</th>
+                  <th>Data</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </TableContainer>
+              </thead>
+
+              <tbody>
+                {transactions.map(transaction => (
+                  <tr key={transaction.id}>
+                    <td className="title">{transaction.title}</td>
+                    <td className={transaction.type}>
+                      {transaction.type === 'outcome' && ' - '}
+                      {transaction.formattedValue}
+                    </td>
+                    <td>
+                      {(transaction.category.title === 'Salario' ||
+                        transaction.category.title === 'Venda') && (
+                        <img src={totalCategory} alt="Total" width="16" />
+                      )}
+                      {transaction.category.title === 'Moradia' && <FiHome />}
+                      {transaction.category.title === 'Comida' && (
+                        <GiHamburger />
+                      )}
+                      {transaction.category.title === 'Transporte' && (
+                        <RiBikeLine />
+                      )}
+                      {transaction.category.title}
+                    </td>
+                    <td>{transaction.formattedDate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableContainer>
+        ) : (
+          <h3 className="title">Não há nenhuma transação cadastrada.</h3>
+        )}
       </Container>
     </>
   );
